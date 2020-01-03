@@ -4,32 +4,19 @@
 //We always have to include the library
 #include "LedControl.h"
 
-/*
-  Now we need a LedControl to work with.
- ***** These pin numbers will probably not work with your hardware *****
-  pin 12 is connected to the DataIn
-  pin 11 is connected to LOAD(CS)
-  pin 10 is connected to the CLK
-  We have only a single MAX72XX.
-*/
-LedControl lc = LedControl(12, 10, 11, 1);
 
-/* we always wait a bit between updates of the display */
-unsigned long delaytime1 = 500;
-unsigned long delaytime2 = 50;
+LedControl lc = LedControl(12, 10, 11, 1);
 
 int PinX = 0;
 int PinY = 1;
 int currentCol, currentRow;
 bool Up, Down, Left, Right;
 
-void setup() {
+void setup() 
+{
   currentCol = 0;
   currentRow = 1;
-  /*
-    The MAX72XX is in power-saving mode on startup,
-    we have to do a wakeup call
-  */
+
   lc.shutdown(0, false);
   /* Set the brightness to a medium values */
   lc.setIntensity(0, 0);
@@ -39,7 +26,6 @@ void setup() {
   lc.setColumn(0, currentCol, currentRow);
 
   Serial.begin(9600);
-
 }
 
 void loop()
@@ -49,7 +35,8 @@ void loop()
   MovePoint();
 }
 
-void JoystickControlX() {
+void JoystickControlX() 
+{
   if (analogRead(PinX) < 450) {
     Left = true;
     Right = false;
@@ -68,7 +55,8 @@ void JoystickControlX() {
   }
 }
 
-void JoystickControlY() {
+void JoystickControlY() 
+{
   if (analogRead(PinY) < 450) {
     Down = false;
     Up = true;
